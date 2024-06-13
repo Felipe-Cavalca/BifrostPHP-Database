@@ -1,0 +1,16 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "merge the latest version of the base with the current branch",
+            "type": "shell",
+            "problemMatcher": [],
+            "windows": {
+                "command": "if (git remote | findstr 'base') { git remote set-url base https://github.com/Felipe-Cavalca/base-repo.git } else { git remote add base https://github.com/Felipe-Cavalca/base-repo.git }; git fetch base; git merge base/lastet-release"
+            },
+            "linux": {
+                "command": "git remote | grep base && git remote set-url base https://github.com/Felipe-Cavalca/base-repo.git || git remote add base https://github.com/Felipe-Cavalca/base-repo.git; git fetch base && git merge base/lastet-release"
+            }
+        }
+    ]
+}
