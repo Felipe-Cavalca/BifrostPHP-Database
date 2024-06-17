@@ -9,6 +9,7 @@ Base repository for my project to maintain standardization of licenses, inssues,
     * [bug-report.md](.github/ISSUE_TEMPLATE/bug-report.md)
     * [enhancement-request.md](.github/ISSUE_TEMPLATE/enhancement-request.md)
   * [workflows](.github/workflows/)
+    * [merge_branch_on_release.yml](.github/workflows/merge_branch_on_release.yml)
     * [tag_on_merge.yml](.github/workflows/tag_on_merge.yml)
   * [CODE_OF_CONDUCT.md](.github/CODE_OF_CONDUCT.md)
   * [CONTRIBUTING.md](.github/CONTRIBUTING.md)
