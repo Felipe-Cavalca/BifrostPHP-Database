@@ -1,0 +1,7 @@
+FROM mysql:8.0
+
+COPY ./scripts/entrypoint-slave.sh /scripts/entrypoint-slave.sh
+
+RUN chmod +x /scripts/entrypoint-slave.sh
+
+ENTRYPOINT ["/scripts/entrypoint-slave.sh"]
