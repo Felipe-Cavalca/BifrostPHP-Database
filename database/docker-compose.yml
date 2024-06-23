@@ -1,70 +1,86 @@
 services:
-  master-db:
+
+  database1:
+    #Master
     build:
       context: .
-      dockerfile: Dockerfile.master
-    container_name: master-db
-    restart: always
+      dockerfile: Dockerfile
+    container_name: database1
+    # restart: always
+    environment:
+      MYSQL_ID: 1
+      MASTER_HOST: database2
     env_file:
       - .env
     ports:
       - "23306:3306"
     volumes:
-      - master-data:/var/lib/mysql
+      - database1-data:/var/lib/mysql
     networks:
       - mysql_cluster
 
-  slave-db-1:
+  database2:
+    #Master
     build:
       context: .
-      dockerfile: Dockerfile.slave
-    container_name: slave-db-1
-    restart: always
+      dockerfile: Dockerfile
+    container_name: database2
+    # restart: always
+    environment:
+      MYSQL_ID: 2
+      MASTER_HOST: database1
     env_file:
       - .env
     ports:
       - "23307:3306"
-    depends_on:
-      - master-db
+    volumes:
+      - database2-data:/var/lib/mysql
     networks:
       - mysql_cluster
 
-  slave-db-2:
+  database3:
+    #Slave
     build:
       context: .
-      dockerfile: Dockerfile.slave
-    container_name: slave-db-2
-    restart: always
+      dockerfile: Dockerfile
+    container_name: database3
+    # restart: always
+    environment:
+      MYSQL_ID: 3
+      MASTER_HOST: database1
     env_file:
       - .env
     ports:
       - "23308:3306"
-    depends_on:
-      - master-db
+    volumes:
+      - database3-data:/var/lib/mysql
     networks:
       - mysql_cluster
 
-  proxysql:
-    image: proxysql/proxysql
-    container_name: proxysql
-    restart: always
-    ports:
-      - "6033:6033"  # MySQL Client
-      - "6032:6032"  # Admin Interface
+  database4:
+    #Slave
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: database4
+    # restart: always
+    environment:
+      MYSQL_ID: 4
+      MASTER_HOST: database2
     env_file:
       - .env
+    ports:
+      - "23309:3306"
     volumes:
-      - ./scripts/generate_proxysql_config.sh:/docker-entrypoint-initdb.d/generate_proxysql_config.sh
-    entrypoint: ["/docker-entrypoint-initdb.d/generate_proxysql_config.sh"]
-    depends_on:
-      - master-db
-      - slave-db-1
-      - slave-db-2
+      - database4-data:/var/lib/mysql
     networks:
       - mysql_cluster
 
 volumes:
-  master-data:
+  database1-data:
+  database2-data:
+  database3-data:
+  database4-data:
 
 networks:
   mysql_cluster:
