@@ -18,7 +18,6 @@
             "type": "shell",
             "command": "docker-compose",
             "args": [
-                "-f",
                 "database/docker-compose.yml",
                 "up",
                 "--build",
