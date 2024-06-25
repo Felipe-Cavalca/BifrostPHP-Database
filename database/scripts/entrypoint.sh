@@ -10,7 +10,7 @@ echo "auto_increment_increment=2" >> /etc/mysql/conf.d/serverid.cnf
 echo "auto_increment_offset=$MYSQL_ID" >> /etc/mysql/conf.d/serverid.cnf
 
 # Inicia o mysql
-docker-entrypoint.sh mysqld
+docker-entrypoint.sh mysqld &
 
 # Manter o container rodando
 wait
