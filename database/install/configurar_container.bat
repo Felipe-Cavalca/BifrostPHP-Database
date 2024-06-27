@@ -14,6 +14,7 @@ timeout /t 30
 echo Executando o script2 em todos os containers de banco de dados...
 for /f "tokens=*" %%i in ('docker ps -q --filter "label=tipo=db"') do (
     echo Executando o script2 no container de banco de dados: %%i
+    timeout /t 5
     docker exec %%i /bin/sh %caminhoScript2%
 )
 
