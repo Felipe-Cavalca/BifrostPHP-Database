@@ -1,15 +1,8 @@
 services:
 
   database1:
-    #Master
-    build:
-      context: .
-      dockerfile: Dockerfile
+    image: mariadb
     container_name: database1
-    # restart: always
-    environment:
-      MYSQL_ID: 1
-      MASTER_HOST: database2
     env_file:
       - .env
     ports:
@@ -17,71 +10,11 @@ services:
     volumes:
       - database1-data:/var/lib/mysql
     networks:
-      - mysql_cluster
-
-  database2:
-    #Master
-    build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: database2
-    # restart: always
-    environment:
-      MYSQL_ID: 2
-      MASTER_HOST: database1
-    env_file:
-      - .env
-    ports:
-      - "23307:3306"
-    volumes:
-      - database2-data:/var/lib/mysql
-    networks:
-      - mysql_cluster
-
-  database3:
-    #Slave
-    build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: database3
-    # restart: always
-    environment:
-      MYSQL_ID: 3
-      MASTER_HOST: database1
-    env_file:
-      - .env
-    ports:
-      - "23308:3306"
-    volumes:
-      - database3-data:/var/lib/mysql
-    networks:
-      - mysql_cluster
-
-  database4:
-    #Slave
-    build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: database4
-    # restart: always
-    environment:
-      MYSQL_ID: 4
-      MASTER_HOST: database2
-    env_file:
-      - .env
-    ports:
-      - "23309:3306"
-    volumes:
-      - database4-data:/var/lib/mysql
-    networks:
-      - mysql_cluster
+      - mysql
 
 volumes:
   database1-data:
-  database2-data:
-  database3-data:
-  database4-data:
 
 networks:
-  mysql_cluster:
+  mysql:
     driver: bridge
