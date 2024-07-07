@@ -1,7 +1,7 @@
 services:
 
   database1:
-    image: mariadb
+    image: mysql
     container_name: database1
     env_file:
       - .env
