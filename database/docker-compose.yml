@@ -9,6 +9,8 @@ services:
       - "23306:3306"
     volumes:
       - database1-data:/var/lib/mysql
+      - ./install.sh:/scripts/install.sh
+      - ./install:/scripts/install
     networks:
       - mysql
 
