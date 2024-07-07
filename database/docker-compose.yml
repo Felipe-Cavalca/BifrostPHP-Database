@@ -8,9 +8,10 @@ services:
     ports:
       - "23306:3306"
     volumes:
-      - database1-data:/var/lib/mysql
-      - ./install.sh:/scripts/install.sh
-      - ./install:/scripts/install
+      - database1-data:/var/lib/mysql # Adicionando volume para persistência dos dados
+      - ./install.sh:/scripts/install.sh # Adicionando script de instalação
+      - ./src:/scripts/src # Adicionando pasta de scripts para gerenciamento do banco
+      - ./install:/scripts/install # Adicionando pasta de scripts de instalação
     networks:
       - mysql
 

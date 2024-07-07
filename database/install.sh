@@ -1,36 +1,65 @@
 #!/bin/bash
 
-# Define o caminho da pasta onde estão os arquivos SQL
-diretorio_sql="/scripts/install"
+# Define o caminho das pastas onde estão os arquivos SQL
+dir_src="/scripts/src"
+dir_install="/scripts/install"
 
-# Pega usuário, senha e host do ambiente
-usuario="root"
-senha=$MYSQL_ROOT_PASSWORD
+# Pega usuário, senha, host, e banco do ambiente
+user="root"
+password=$MYSQL_ROOT_PASSWORD
 host=$MYSQL_HOST
 database=$MYSQL_DATABASE
 
 # Inicia a transação
-echo "Iniciando transação..."
-mysql -u $usuario -p$senha -h$host -D$database -e "START TRANSACTION;"
+echo "bfr [Info] Iniciando transação..."
+mysql -u $user -p$password -h$host -D$database -e "START TRANSACTION;"
 
 # Variável para controle de erro
-erro=0
+error=0
 
-# Lê cada arquivo SQL na pasta e executa
-for arquivo_sql in $diretorio_sql/*.sql; do
-  echo "Executando $arquivo_sql..."
-  mysql -u $usuario -p$senha -D$database -h $host < "$arquivo_sql" || erro=1
+# Função para executar scripts SQL
+executar_scripts() {
+    local dir_sql=$1
+    local ignore_validation=$2
+    local error=0
+    for file_sql in $dir_sql/*.sql; do
+        # Extrai o nome do arquivo para verificar na tabela de migration
+        name_file=$(basename "$file_sql")
 
-  # Verifica se ocorreu erro na execução
-  if [ $erro -ne 0 ]; then
-    echo "Erro ao executar $arquivo_sql. Iniciando rollback..."
-    mysql -u $usuario -p$senha -D$database -h$host -e "ROLLBACK;"
-    exit 1
-  fi
-done
+        if [ "$ignore_validation" != "true" ]; then
+            # Verifica se o arquivo já foi executado
+            executed=$(mysql -u $user -p$password -D$database -h $host -sse "SELECT COUNT(*) FROM bfr_migration WHERE file='$name_file'")
+        else
+            executed=0
+        fi
+
+        if [ "$executed" -eq 0 ]; then
+            echo "bfr [Info] Executando $file_sql..."
+            mysql -u $user -p$password -D$database -h $host < "$file_sql" || error=1
+
+            # Verifica se ocorreu error na execução
+            if [ $error -ne 0 ]; then
+                echo "bfr [Info] Erro ao executar $file_sql. Iniciando rollback..."
+                mysql -u $user -p$password -D$database -h $host -e "ROLLBACK;"
+                exit 1
+            else
+                # Insere o nome do arquivo na tabela de migration após a execução bem-sucedida
+                mysql -u $user -p$password -D$database -h $host -e "INSERT INTO bfr_migration (file) VALUES ('$name_file');"
+            fi
+        else
+            echo "bfr [Info] $file_sql já foi executado. Ignorando..."
+        fi
+    done
+}
+
+# Executar scripts do core sem verificar se já foram executados
+executar_scripts $dir_src true
+
+# Executar scripts de instalação com verificação
+executar_scripts $dir_install false
 
 # Se todos os scripts foram executados com sucesso, faz commit
 if [ $erro -eq 0 ]; then
-  echo "Todos os scripts executados com sucesso. Fazendo commit..."
-  mysql -u $usuario -p$senha -D$database -h$host -e "COMMIT;"
-fi
+    echo "bfr [Info] Todos os scripts executados com sucesso. Fazendo commit..."
+    mysql -u $user -p$password -D$database -h $host -e "COMMIT;"
+fifi
