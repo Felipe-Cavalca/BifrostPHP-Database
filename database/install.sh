@@ -59,7 +59,7 @@ executar_scripts $dir_src true
 executar_scripts $dir_install false
 
 # Se todos os scripts foram executados com sucesso, faz commit
-if [ $erro -eq 0 ]; then
+if [ $error -eq 0 ]; then
     echo "bfr [Info] Todos os scripts executados com sucesso. Fazendo commit..."
     mysql -u $user -p$password -D$database -h $host -e "COMMIT;"
-fifi
+fi
