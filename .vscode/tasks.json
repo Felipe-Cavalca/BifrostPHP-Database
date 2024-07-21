@@ -1,15 +1,16 @@
 {
     "version": "2.0.0",
     "tasks": [
+        // Scrips base
         {
-            "label": "mesclar base com a branch atual",
+            "label": "mesclar base/last-release com a branch atual",
             "type": "shell",
             "problemMatcher": [],
             "windows": {
-                "command": "if (git remote | findstr 'base') { git remote set-url base https://github.com/Felipe-Cavalca/base-repo.git } else { git remote add base https://github.com/Felipe-Cavalca/base-repo.git }; git fetch base; git merge base/latest-release"
+                "command": "if (git remote | findstr 'base') { git remote set-url base https://github.com/Felipe-Cavalca/base-repo.git } else { git remote add base https://github.com/Felipe-Cavalca/base-repo.git }; git fetch base; git merge base/latest-release --allow-unrelated-histories"
             },
             "linux": {
-                "command": "git remote | grep base && git remote set-url base https://github.com/Felipe-Cavalca/base-repo.git || git remote add base https://github.com/Felipe-Cavalca/base-repo.git; git fetch base && git merge base/latest-release"
+                "command": "git remote | grep base && git remote set-url base https://github.com/Felipe-Cavalca/base-repo.git || git remote add base https://github.com/Felipe-Cavalca/base-repo.git; git fetch base && git merge base/latest-release --allow-unrelated-histories"
             }
         },
         // Scripts do banco
