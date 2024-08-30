@@ -11,7 +11,7 @@
     Após subir o ambiente, use o comando abaixo para executar o script [`install.sh`](../install.sh):
 
     ```bash
-    docker exec database1 /bin/bash /scripts/install.sh
+    docker exec database /bin/bash /scripts/install.sh
     ```
 
     Esse script irá listar todos os arquivos `.sql` dentro da pasta [`/install`](../install/) e executá-los no banco de dados.
@@ -37,9 +37,9 @@ Você pode criar scripts `SQL` personalizados para configurar o banco de dados d
     Aqui está um exemplo de um script que cria uma tabela simples:
 
     ```sql
-    CREATE TABLE exemplo (
-        id INT PRIMARY KEY,
-        nome VARCHAR(100)
+    CREATE TABLE `exemplo` (
+        `id` SERIAL PRIMARY KEY,
+        `nome` VARCHAR(100)
     );
     ```
 
@@ -52,5 +52,5 @@ Você pode criar scripts `SQL` personalizados para configurar o banco de dados d
     O script [`install.sh`](../install.sh) automaticamente detectará e executará todos os arquivos `.sql` na pasta [`/install`](../install/) na próxima vez que você executar o comando:
 
     ```bash
-    docker exec database1 /bin/bash /scripts/install.sh
+    docker exec database /bin/bash /scripts/install.sh
     ```
