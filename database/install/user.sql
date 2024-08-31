@@ -6,3 +6,6 @@ CREATE TABLE IF NOT EXISTS users (
     password TEXT NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+-- Exemplo para criar um trigger para a tabela 'users'
+SELECT create_log_trigger('users');
