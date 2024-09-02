@@ -19,7 +19,7 @@ CREATE OR REPLACE FUNCTION log_changes()
 RETURNS TRIGGER AS $$
 DECLARE
     log_table_name TEXT;
-    system_identifier TEXT := current_setting('myapp.system_identifier', true); -- Obtém o identificador do sistema
+    system_identifier TEXT := current_setting('bifrost.system_identifier', true); -- Obtém o identificador do sistema
 BEGIN
     log_table_name := TG_TABLE_NAME || '_log';
 
