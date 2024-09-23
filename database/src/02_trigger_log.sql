@@ -37,7 +37,7 @@ BEGIN
         EXECUTE format('
             CREATE TABLE IF NOT EXISTS %I (
                 id SERIAL PRIMARY KEY,
-                original_id INT REFERENCES %I(id),
+                original_id INT,
                 action TEXT, -- Tipo de ação (INSERT, UPDATE, DELETE)
                 old_data JSONB,
                 new_data JSONB,
@@ -62,7 +62,7 @@ BEGIN
             INSERT INTO %I (action, old_data, new_data, changed, system_identifier, original_id)
             VALUES ($1, $2, $3, current_timestamp, $4, $5)',
             log_table_name)
-        USING TG_OP, row_to_json(OLD), row_to_json(NEW), system_identifier, NEW.id;
+        USING TG_OP, row_to_json(OLD), row_to_json(NEW), system_identifier, COALESCE(NEW.id, OLD.id, NULL);
     ELSE
         EXECUTE format('
             INSERT INTO %I (action, old_data, new_data, changed, system_identifier)
