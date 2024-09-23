@@ -20,26 +20,56 @@ RETURNS TRIGGER AS $$
 DECLARE
     log_table_name TEXT;
     system_identifier TEXT := current_setting('bifrost.system_identifier', true); -- Obtém o identificador do sistema
+    has_id_column BOOLEAN;
 BEGIN
     log_table_name := TG_TABLE_NAME || '_log';
 
+    -- Verifica se a tabela tem um campo "id"
+    SELECT EXISTS (
+        SELECT 1
+        FROM information_schema.columns
+        WHERE table_name = TG_TABLE_NAME
+        AND column_name = 'id'
+    ) INTO has_id_column;
+
     -- Crie a tabela de log se não existir
-    EXECUTE format('
-        CREATE TABLE IF NOT EXISTS %I (
-            id SERIAL PRIMARY KEY,
-            action_type TEXT, -- Tipo de ação (INSERT, UPDATE, DELETE)
-            old_data JSONB,
-            new_data JSONB,
-            changed_at TIMESTAMPTZ DEFAULT current_timestamp,
-            system_identifier TEXT -- Identificador do sistema, pode ser NULL
-        )', log_table_name);
+    IF has_id_column THEN
+        EXECUTE format('
+            CREATE TABLE IF NOT EXISTS %I (
+                id SERIAL PRIMARY KEY,
+                original_id INT REFERENCES %I(id),
+                action TEXT, -- Tipo de ação (INSERT, UPDATE, DELETE)
+                old_data JSONB,
+                new_data JSONB,
+                changed TIMESTAMPTZ DEFAULT current_timestamp,
+                system_identifier TEXT -- Identificador do sistema, pode ser NULL
+            )', log_table_name, TG_TABLE_NAME);
+    ELSE
+        EXECUTE format('
+            CREATE TABLE IF NOT EXISTS %I (
+                id SERIAL PRIMARY KEY,
+                action TEXT, -- Tipo de ação (INSERT, UPDATE, DELETE)
+                old_data JSONB,
+                new_data JSONB,
+                changed TIMESTAMPTZ DEFAULT current_timestamp,
+                system_identifier TEXT -- Identificador do sistema, pode ser NULL
+            )', log_table_name);
+    END IF;
 
     -- Insere os dados na tabela de log
-    EXECUTE format('
-        INSERT INTO %I (action_type, old_data, new_data, changed_at, system_identifier)
-        VALUES ($1, $2, $3, current_timestamp, $4)',
-        log_table_name)
-    USING TG_OP, row_to_json(OLD), row_to_json(NEW), system_identifier;
+    IF has_id_column THEN
+        EXECUTE format('
+            INSERT INTO %I (action, old_data, new_data, changed, system_identifier, original_id)
+            VALUES ($1, $2, $3, current_timestamp, $4, $5)',
+            log_table_name)
+        USING TG_OP, row_to_json(OLD), row_to_json(NEW), system_identifier, NEW.id;
+    ELSE
+        EXECUTE format('
+            INSERT INTO %I (action, old_data, new_data, changed, system_identifier)
+            VALUES ($1, $2, $3, current_timestamp, $4)',
+            log_table_name)
+        USING TG_OP, row_to_json(OLD), row_to_json(NEW), system_identifier;
+    END IF;
 
     RETURN NEW;
 END;
