@@ -37,7 +37,7 @@ BEGIN
         EXECUTE format('
             CREATE TABLE IF NOT EXISTS %I (
                 id SERIAL PRIMARY KEY,
-                original_id INT REFERENCES %I(id),
+                original_id INT,
                 action TEXT, -- Tipo de ação (INSERT, UPDATE, DELETE)
                 old_data JSONB,
                 new_data JSONB,
