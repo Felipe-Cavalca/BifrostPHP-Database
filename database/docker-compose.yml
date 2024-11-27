@@ -1,7 +1,9 @@
 services:
 
   database:
-    image: postgres
+    build:
+      context: .
+      dockerfile: Dockerfile
     container_name: database
     env_file:
       - .env
@@ -9,13 +11,15 @@ services:
       - "25432:5432"
     volumes:
       - database-data:/var/lib/postgresql/data
-      - ./src:/scripts/src
-      - ./install.sh:/scripts/install.sh
-      - ./install:/scripts/install
-      - ./update.sh:/scripts/update.sh
-      - ./update:/scripts/update
+      - ./src:/scripts/src # DEV
+      - ./install.sh:/scripts/install.sh # DEV
+      - ./install:/scripts/install # DEV
+      - ./update.sh:/scripts/update.sh # DEV
+      - ./update:/scripts/update # DEV
     networks:
       - postgres
+    mem_limit: 512m
+    cpus: '0.25'
 
 volumes:
   database-data:
