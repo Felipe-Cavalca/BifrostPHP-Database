@@ -49,3 +49,7 @@
 - name: wontfix
   color: 000000
   description: This will not be worked on
+
+- name: tests
+  color: 00fff2
+  description: test creation
