@@ -62,13 +62,13 @@ BEGIN
             INSERT INTO %I (action, old_data, new_data, changed, system_identifier, original_id)
             VALUES ($1, $2, $3, current_timestamp, $4, $5)',
             log_table_name)
-        USING TG_OP, row_to_json(OLD), row_to_json(NEW), system_identifier, COALESCE(NEW.id, OLD.id, NULL);
+        USING TG_OP, jsonb_diff(row_to_json(OLD)::jsonb, row_to_json(NEW)::jsonb), jsonb_diff(row_to_json(NEW)::jsonb, row_to_json(OLD)::jsonb), system_identifier, COALESCE(NEW.id, OLD.id, NULL);
     ELSE
         EXECUTE format('
             INSERT INTO %I (action, old_data, new_data, changed, system_identifier)
             VALUES ($1, $2, $3, current_timestamp, $4)',
             log_table_name)
-        USING TG_OP, row_to_json(OLD), row_to_json(NEW), system_identifier;
+        USING TG_OP, jsonb_diff(row_to_json(OLD)::jsonb, row_to_json(NEW)::jsonb), jsonb_diff(row_to_json(NEW)::jsonb, row_to_json(OLD)::jsonb), system_identifier;
     END IF;
 
     RETURN NEW;
