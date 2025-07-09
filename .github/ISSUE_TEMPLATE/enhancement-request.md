@@ -1,20 +1,22 @@
 ---
-name: Enhancement request
-about: Request a new feature or enhancement / Solicitar um novo recurso ou melhoria
+name: Enhancement Request
+about: Request a new feature or improvement / Solicitar um novo recurso ou melhoria
 title: 'New feature:'
 labels: enhancement, documentation
 assignees: ''
-
 ---
 
-## Describe the solution you'd like / Descreva a solução que você gostaria
+## 💡 Describe the Solution You'd Like / Descreva a Solução Desejada
 
-> A clear and concise description of what you want to happen. / Uma descrição clara e concisa do que você deseja que aconteça.
+> A clear and concise description of what you want to happen.
+> Uma descrição clara e concisa do que você deseja que aconteça.
 
-## Describe alternatives you've considered / Descreva alternativas que você considerou
+## 🔄 Alternatives Considered / Alternativas Consideradas
 
-> A clear and concise description of any alternative solutions or features you've considered. / Uma descrição clara e concisa de quaisquer soluções ou recursos alternativos que você considerou.
+> A clear and concise description of any alternative solutions or features you've considered.
+> Uma descrição clara e concisa de quaisquer soluções ou recursos alternativos que você considerou.
 
-## Additional context / Contexto adicional
+## 📎 Additional Context / Contexto Adicional
 
-> Add any other context or screenshots about the feature request here. / Adicione qualquer outro contexto ou capturas de tela sobre a solicitação de recurso aqui.
+> Add any other context or screenshots related to the request.
+> Adicione qualquer outro contexto ou capturas de tela relacionadas à solicitação.
