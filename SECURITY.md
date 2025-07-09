@@ -1,44 +1,53 @@
-# Security policy
-
-[![link-SECURITY-inglês](https://img.shields.io/badge/SECURITY-English/Inglês-red)](./SECURITY.md#english)
-[![link-SECURITY-Portugês](https://img.shields.io/badge/SECURITY-Portuguese/Portugês-green)](./SECURITY.md#português)
+# 🔐 Security Policy
 
 ## English
 
 ### Reporting a Vulnerability
 
-If you have identified a vulnerability in our application, we would like to know so we can take action to fix it.
+If you discover a security vulnerability in our project, we encourage you to report it responsibly so we can address the issue promptly.
 
-**Steps to report a vulnerability:**
+**How to report a vulnerability:**
 
-1. Go to the "Issues" tab of the repository on GitHub.
+1. Navigate to the **Issues** tab on this repository.
 
-2. Click "New Issue".
+2. Click **New Issue**.
 
-3. Select the "Bug Report" template.
+3. Choose the **Bug Report** template.
 
-4. Fill in all relevant details, including a clear description of the vulnerability, how it can be reproduced, and any additional information you deem relevant.
+4. Provide all relevant information, including:
+    - A clear and concise description of the vulnerability
+    - Steps to reproduce the issue
+    - Any additional context or supporting details
 
-5. Submit the report and our development team will review your reported vulnerability.
+5. Submit the issue.
 
-Thanks for helping keep our project safe!
+Our team will review and respond as quickly as possible. We appreciate your help in keeping our project secure!
+
+---
 
 ## Português
 
 ### Relatando uma vulnerabilidade
 
-Se você identificou uma vulnerabilidade em nosso aplicativo, gostaríamos de saber para que possamos tomar medidas para corrigi-la.
+Se você descobrir uma vulnerabilidade de segurança em nosso projeto, incentivamos que a relate de forma responsável para que possamos resolvê-la prontamente.
 
-**Etapas para relatar uma vulnerabilidade:**
+**Como relatar uma vulnerabilidade:**
 
-1. Vá para a aba “Problemas” do repositório no GitHub.
+1. Acesse a aba **Problemas (*Issues*)** deste repositório.
 
-2. Clique em "Novo problema".
+2. Clique em **Novo problema**.
 
-3. Selecione o modelo "Relatório de Bug".
+3. Escolha o modelo **Relatório de Bug**.
 
-4. Preencha todos os detalhes relevantes, incluindo uma descrição clara da vulnerabilidade, como ela pode ser reproduzida e qualquer informação adicional que considere relevante.
+4. Forneça todas as informações relevantes, incluindo:
+    - Uma descrição clara e objetiva da vulnerabilidade
+    - Etapas para reproduzir o problema
+    - Qualquer outro contexto ou detalhe adicional
 
-5. Envie o relatório e nossa equipe de desenvolvimento analisará a vulnerabilidade relatada.
+5. Envie o problema.
 
-Obrigado por ajudar a manter nosso projeto seguro!
+Nossa equipe irá analisar e responder o mais rápido possível. Agradecemos por ajudar a manter nosso projeto seguro!
+
+---
+
+✨ Security is a shared responsibility. Let's build safe software together!
