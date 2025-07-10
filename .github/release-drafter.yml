@@ -4,6 +4,11 @@ include-pre-releases: false
 sort-direction: ascending
 categories:
 
+  - title: 'Depreciado'
+    collapse-after: 5
+    labels:
+      - 'deprecated'
+
   - title: 'Melhorias'
     collapse-after: 3
     labels:
