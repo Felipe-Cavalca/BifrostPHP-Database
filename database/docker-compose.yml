@@ -6,9 +6,9 @@ services:
       dockerfile: Dockerfile
     container_name: database
     env_file:
-      - .env
+      - ./../.env
     ports:
-      - "25432:5432"
+      - "5432:5432"
     volumes:
       - database-data:/var/lib/postgresql/data
       - ./src:/scripts/src # DEV
@@ -16,14 +16,8 @@ services:
       - ./install:/scripts/install # DEV
       - ./update.sh:/scripts/update.sh # DEV
       - ./update:/scripts/update # DEV
-    networks:
-      - postgres
     mem_limit: 512m
     cpus: '0.25'
 
 volumes:
   database-data:
-
-networks:
-  postgres:
-    driver: bridge
