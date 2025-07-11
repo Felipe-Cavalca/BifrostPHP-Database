@@ -45,12 +45,12 @@ executar_scripts() {
 }
 
 # Executar scripts do core sem verificar se já foram executados
-executar_scripts $dir_src true
+executar_scripts $dir_src false
 
 # Executar scripts de instalação com verificação
 executar_scripts $dir_install false
 
 # Executar scripts de instalação com verificação
-executar_scripts $dir_update
+executar_scripts $dir_update false
 
 echo "[BFR][Info] Todos os scripts executados com sucesso."
