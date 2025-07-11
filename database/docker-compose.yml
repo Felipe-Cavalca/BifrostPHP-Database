@@ -12,7 +12,6 @@ services:
     volumes:
       - database-data:/var/lib/postgresql/data
       - ./src:/scripts/src # DEV
-      - ./install.sh:/scripts/install.sh # DEV
       - ./install:/scripts/install # DEV
       - ./update.sh:/scripts/update.sh # DEV
       - ./update:/scripts/update # DEV
