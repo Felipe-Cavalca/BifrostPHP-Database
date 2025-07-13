@@ -12,7 +12,7 @@ host="localhost"
 database=$POSTGRES_DB
 
 # Função para executar scripts SQL
-executar_scripts() {
+run_scripts() {
     local dir_sql=$1
     local ignore_validation=$2
     for file_sql in $dir_sql/*.sql; do
@@ -45,12 +45,12 @@ executar_scripts() {
 }
 
 # Executar scripts do core sem verificar se já foram executados
-executar_scripts $dir_src false
+run_scripts $dir_src false
 
 # Executar scripts de instalação com verificação
-executar_scripts $dir_install false
+run_scripts $dir_install false
 
 # Executar scripts de instalação com verificação
-executar_scripts $dir_update false
+run_scripts $dir_update false
 
 echo "[BFR][Info] Todos os scripts executados com sucesso."
