@@ -36,7 +36,7 @@ run_scripts() {
                 exit 1
             else
                 # Insere o nome do arquivo na tabela de migration após a execução bem-sucedida
-                PGPASSWORD=$password psql -U "$user" -h "$host" -d "$database" -q -c "INSERT INTO bfr_migration (file) VALUES ('$name_file');"
+                PGPASSWORD=$password psql -U "$user" -h "$host" -d "$database" -q -c "INSERT INTO bfr_migration (file) VALUES ('$name_file') ON CONFLICT DO NOTHING;"
             fi
         else
             echo "[BFR][Info] $file_sql já foi executado. Ignorando..."
