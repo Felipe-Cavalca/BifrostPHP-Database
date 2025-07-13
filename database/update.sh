@@ -45,7 +45,7 @@ run_scripts() {
 }
 
 # Executar scripts do core sem verificar se já foram executados
-run_scripts $dir_src false
+run_scripts $dir_src true
 
 # Executar scripts de instalação com verificação
 run_scripts $dir_install false
