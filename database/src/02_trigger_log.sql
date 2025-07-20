@@ -36,8 +36,8 @@ BEGIN
     IF has_id_column THEN
         EXECUTE format('
             CREATE TABLE IF NOT EXISTS %I (
-                id SERIAL PRIMARY KEY,
-                original_id INT,
+                id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+                original_id UUID,
                 action TEXT, -- Tipo de ação (INSERT, UPDATE, DELETE)
                 old_data JSONB,
                 new_data JSONB,
@@ -47,7 +47,7 @@ BEGIN
     ELSE
         EXECUTE format('
             CREATE TABLE IF NOT EXISTS %I (
-                id SERIAL PRIMARY KEY,
+                id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
                 action TEXT, -- Tipo de ação (INSERT, UPDATE, DELETE)
                 old_data JSONB,
                 new_data JSONB,
