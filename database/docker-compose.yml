@@ -11,10 +11,6 @@ services:
       - "5432:5432"
     volumes:
       - database-data:/var/lib/postgresql/data
-      - ./src:/scripts/src # DEV
-      - ./install:/scripts/install # DEV
-      - ./update.sh:/scripts/update.sh # DEV
-      - ./update:/scripts/update # DEV
     mem_limit: 512m
     cpus: '0.25'
 
