@@ -172,3 +172,30 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           manifest: .github/labels.yml
           prune: true
+
+  publish_docker_image_database:
+    needs: create_tag_and_draft_release  # Pega a versão gerada no job anterior
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout código
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Obtém todo o histórico e tags
+
+      - name: Obter Última Tag
+        id: get_latest_tag
+        run: |
+          LATEST_TAG=$(git tag --sort=-v:refname | head -n 1)
+          echo "TAG=$LATEST_TAG" >> $GITHUB_ENV
+
+      - name: Login no GitHub Container Registry
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+
+      - name: Construir e Publicar Imagem Docker do DATABASE
+        run: |
+          REPO_NAME=$(echo "${{ github.repository }}" | tr '[:upper:]' '[:lower:]')
+
+          docker build -t ghcr.io/${REPO_NAME}:${TAG} -f api/Dockerfile api/
+          docker tag ghcr.io/${REPO_NAME}:${TAG} ghcr.io/${REPO_NAME}:latest
+          docker push ghcr.io/${REPO_NAME}:${TAG}
+          docker push ghcr.io/${REPO_NAME}:latest
