@@ -195,7 +195,7 @@ jobs:
         run: |
           REPO_NAME=$(echo "${{ github.repository }}" | tr '[:upper:]' '[:lower:]')
 
-          docker build -t ghcr.io/${REPO_NAME}:${TAG} -f api/Dockerfile api/
+          docker build -t ghcr.io/${REPO_NAME}:${TAG} -f database/Dockerfile database/
           docker tag ghcr.io/${REPO_NAME}:${TAG} ghcr.io/${REPO_NAME}:latest
           docker push ghcr.io/${REPO_NAME}:${TAG}
           docker push ghcr.io/${REPO_NAME}:latest
