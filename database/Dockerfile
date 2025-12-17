@@ -1,5 +1,5 @@
 # Dockerfile.database
-FROM postgres:18.3
+FROM postgres:18.1-bookworm
 
 COPY ./src /scripts/src
 COPY ./install /scripts/install
