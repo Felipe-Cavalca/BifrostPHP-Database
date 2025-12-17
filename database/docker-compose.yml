@@ -10,7 +10,7 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - database-data:/var/lib/postgresql/data
+      - database-data:/var/lib/postgresql
     mem_limit: 512m
     cpus: '0.25'
 
